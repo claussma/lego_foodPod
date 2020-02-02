@@ -103,22 +103,14 @@ def mod_speed(pos, set=True, minspeed=10, maxspeed=100):
     pos = abs(pos)
 
     if pos > 360:
-        v = pos//360
-        pos = pos - v*360
+        pos = 360
+    elif pos < 0:
+        pos = 0
 
     pos = pos/360
 
-    if pos < 0.1:
-        pos = minspeed
-    if pos > 100:
-        pos = maxspeed
-
-    speed = pos*maxspeed
-
-    # BUG
-    speed = 60
-
-    if set:
+    if speed != pos*maxspeed:
+        speed = pos*maxspeed
         motor_speed(speed)
 
 # init variables
@@ -168,7 +160,6 @@ while True:
     
     if cs.color in [ColorSensor.COLOR_RED, ColorSensor.COLOR_GREEN]:
         turn()
-    
-    #pos = abs(sm.position)
-    #if pos != speed:
-    #    mod_speed(pos)
+
+    #speed chainged
+    mod_speed(abs(sm.position))
